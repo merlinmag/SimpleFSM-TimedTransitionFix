@@ -302,7 +302,10 @@ bool SimpleFSM::_isTimeForRun(unsigned long now, int interval) {
 
 void SimpleFSM::_handleTimedEvents(unsigned long now) {
   for (int i = 0; i < num_timed; i++) {
-    if (timed[i].from != current_state) continue;
+    if (timed[i].from != current_state) {
+      timed[i].start = 0; // Reset the timers of not currently runing states
+      continue;
+    }
     // start the transition timer 
     if (timed[i].start == 0) {
       timed[i].start = now;
